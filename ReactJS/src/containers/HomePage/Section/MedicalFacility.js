@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './Specialty.scss';
+import './MedicalFacility.scss';
 import Slider from 'react-slick';
 
-class Specialty extends Component {
+class MedicalFacility extends Component {
 
     render() {
 
         return (
-            <div className="section-specialty">
+            <div className="section-medical">
                 <div className="section-container">
                     <div className="section-header">
-                        <span className="title-section">Chuyên khoa phổ biến</span>
+                        <span className="title-section">Cơ sở y tế nổi bật</span>
                         <button className="btn-section">Xem thêm</button>
                     </div>
                     <div className="section-body">
@@ -62,4 +62,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default connect(mapStateToProps, mapDispatchToProps)(MedicalFacility);
