@@ -1,46 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './About.scss';
-import Slider from 'react-slick';
 
 class About extends Component {
 
     render() {
 
         return (
-            <div className="section-About">
-                <div className="section-container">
-                    <div className="section-header">
-                        <span className="title-section">Cẩm nang</span>
-                        <button className="btn-section">Xem thêm</button>
+            <div className="section-about">
+                <div className="section-about-header">
+                    Truyền thông nói gì về BookingCare
+                </div>
+                <div className="section-about-content">
+                    <div className="content-left">
+                        <iframe width="100%" height="400px"
+                            src="https://www.youtube.com/embed/w5qOoL6wx2A"
+                            title="ไม่ธรรมดา Ost. U-PRINCE Series - มุก วรนิษฐ์"
+                            frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
+                            encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                        </iframe>
                     </div>
-                    <div className="section-body">
-                        <Slider {...this.props.settings}>
-                            <div className="section-customize">
-                                <div className="bg-image" />
-                                <div>Cơ xương khớp 1</div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="bg-image" />
-                                <div>Cơ xương khớp 2</div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="bg-image" />
-                                <div>Cơ xương khớp 3</div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="bg-image" />
-                                <div>Cơ xương khớp 4</div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="bg-image" />
-                                <div>Cơ xương khớp 5</div>
-                            </div>
-                            <div className="section-customize">
-                                <div className="bg-image" />
-                                <div>Cơ xương khớp 6</div>
-                            </div>
-                        </Slider>
+                    <div className="content-right">
+                        <p>
+                            Ngày 10-4, tại Thanh Hóa, Hiệp hội Bệnh viện tư nhân Việt Nam tổ chức Hội nghị tổng kết công tác năm 2020, triển khai phương hướng, nhiệm vụ năm 2021; Ký kết thoả thuận hợp tác giữa Cục Công nghệ thông tin Bộ Y tế và Hiệp hội Bệnh viện tư nhân Việt Nam về thúc đẩy chuyển đổi số y tế trong hệ thống y tế tư nhân với sự tham gia của đại diện các ban ngành.
+                        </p>
                     </div>
                 </div>
             </div>

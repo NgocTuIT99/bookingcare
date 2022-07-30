@@ -2,6 +2,10 @@
     height: 70px;
     width: 100%;
     padding: 0 40px;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 10000;
 
     .home-header-content {
         width: 100%;
@@ -61,6 +65,7 @@
 
             .language-vi {
                 cursor: pointer;
+
                 &.active {
                     span {
                         color: orange;
@@ -71,6 +76,7 @@
             .language-en {
                 cursor: pointer;
                 margin: 0 10px;
+
                 &.active {
                     span {
                         color: orange;
@@ -93,7 +99,7 @@
     .content-up {
         height: 65%;
         padding-top: 15px;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.25),rgba(255, 255, 255, 0.1));
+        background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(255, 255, 255, 0.1));
 
         .title1 {
             text-align: center;
@@ -103,7 +109,7 @@
             margin-bottom: 5px;
             margin-top: 30px;
         }
-    
+
         .title2 {
             text-align: center;
             font-size: 30px;
@@ -111,7 +117,7 @@
             color: white;
             margin-bottom: 15px;
         }
-    
+
         .search {
             width: fit-content;
             display: flex;
@@ -121,11 +127,11 @@
             padding: 10px;
             border-radius: 25px;
             background: #f7d800;
-    
+
             i {
                 margin: 0 5px;
             }
-    
+
             input {
                 height: 30px;
                 width: 360px;
@@ -142,7 +148,7 @@
         align-items: flex-end;
         justify-content: center;
         padding-bottom: 10px;
-        background-image: linear-gradient(rgba(255, 255, 255, 0.1),rgba(255, 255, 255, 0.9),rgba(255, 255, 255, 1));
+        background-image: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 1));
 
         .options {
             text-align: center;
