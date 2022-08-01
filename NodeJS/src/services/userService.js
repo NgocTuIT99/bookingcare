@@ -153,10 +153,10 @@ let updateUser = (data) => {
             })
             if (user) {
                 user.firstName = data.firstName,
-                user.lastName = data.lastName,
-                user.address = data.address,
+                    user.lastName = data.lastName,
+                    user.address = data.address,
 
-                await user.save();
+                    await user.save();
                 resolve({
                     errCode: 0,
                     message: 'Update the user is successed'
@@ -200,6 +200,29 @@ let deleteUser = (data) => {
     })
 }
 
+let getAllCodeService = (typeInput) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!typeInput) {
+                resolve({
+                    errCode: 1,
+                    message: 'Missing required parameters'
+                })
+            } else {
+                let res = {};
+                let allcode = await db.Allcode.findAll({
+                    where: { type: typeInput }
+                });
+                res.errCode = 0;
+                res.data = allcode;
+                resolve(res);
+            }
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
 module.exports = {
     handleUserLogin: handleUserLogin,
     getAllUsers: getAllUsers,
@@ -207,4 +230,5 @@ module.exports = {
     getUserInfoById: getUserInfoById,
     updateUser: updateUser,
     deleteUser: deleteUser,
+    getAllCodeService: getAllCodeService,
 }
