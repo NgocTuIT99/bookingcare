@@ -103,6 +103,7 @@ let createNewUser = async (data) => {
                     gender: data.gender,
                     roleId: data.roleId,
                     positionId: data.positionId,
+                    image: data.avatar
                 })
                 resolve({
                     errCode: 0,
@@ -159,16 +160,19 @@ let updateUser = (data) => {
                 raw: false
             })
             if (user) {
-                user.firstName = data.firstName,
-                    user.lastName = data.lastName,
-                    user.address = data.address,
-                    user.roleId = data.roleId,
-                    user.gender = data.gender,
-                    user.positionId = data.positionId,
-                    user.phoneNumber = data.phoneNumber,
-                    user.email = data.email,
+                user.firstName = data.firstName;
+                user.lastName = data.lastName;
+                user.address = data.address;
+                user.roleId = data.roleId;
+                user.gender = data.gender;
+                user.positionId = data.positionId;
+                user.phoneNumber = data.phoneNumber;
+                user.email = data.email;
+                if (data.avatar) {
+                    user.image = data.avatar;
+                }
 
-                    await user.save();
+                await user.save();
                 resolve({
                     errCode: 0,
                     message: 'Update the user is successed'
