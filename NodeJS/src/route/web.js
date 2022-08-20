@@ -8,7 +8,6 @@ let router = express.Router();
 let iniWebRoutes = (app) => {
     router.get('/', homeController.getHomePage);
     router.get('/crud', homeController.getCRUD);
-
     router.post('/post-crud', homeController.postCRUD);
     router.get('/get-crud', homeController.displayCRUD);
     router.get('/edit-crud', homeController.editCRUD);
@@ -23,6 +22,9 @@ let iniWebRoutes = (app) => {
     router.get('/api/allcode', userController.getAllCode);
 
     router.get('/api/top-doctor-home', doctorController.getTopDoctorHome);
+    router.get('/api/get-all-doctor', doctorController.getAllDoctor);
+    router.post('/api/save-infor-doctor', doctorController.postInforDoctor);
+    router.post('/api/get-infor-doctor-by-id', doctorController.getInforDoctorById);
 
     return app.use("/", router);
 }

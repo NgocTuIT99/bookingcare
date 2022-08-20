@@ -28,6 +28,93 @@ let getTopDoctorHome = (limit) => {
     })
 }
 
+let getAllDoctor = () => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let users = await db.User.findAll({
+                where: { roleId: 'R2' },
+                attributes: {
+                    exclude: ['password', 'image']
+                },
+            })
+
+            resolve({
+                errCode: 0,
+                data: users
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let postInforDoctor = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.doctorId || !data.contentHTML || !data.contentMarkdown) {
+                resolve({
+                    errCode: 1,
+                    message: 'Missing parameter'
+                })
+            } else {
+                await db.Markdown.create({
+                    contentHTML: data.contentHTML,
+                    contentMarkdown: data.contentMarkdown,
+                    description: data.description,
+                    doctorId: data.doctorId,
+                })
+                resolve({
+                    errCode: 0,
+                    message: 'Save infor doctor success'
+                })
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let getInforDoctorById = (idInput) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!idInput) {
+                resolve({
+                    errCode: 1,
+                    message: 'Missing parameter'
+                })
+            } else {
+                let users = await db.User.findOne({
+                    where: {
+                        id: idInput
+                    },
+                    attributes: {
+                        exclude: ['password', 'image']
+                    },
+                    include: [
+                        {
+                            model: db.Markdown,
+                            attributes: ['description', 'contentHTML', 'contentMarkdown']
+                        },
+                        { model: db.Allcode, as: 'positionData', attributes: ['valueEn', 'valueVi'] },
+                    ],
+                    raw: true,
+                    nest: true,
+                })
+
+                resolve({
+                    errCode: 0,
+                    data: users
+                })
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
-    getTopDoctorHome: getTopDoctorHome
+    getTopDoctorHome: getTopDoctorHome,
+    getAllDoctor: getAllDoctor,
+    postInforDoctor: postInforDoctor,
+    getInforDoctorById: getInforDoctorById,
 }

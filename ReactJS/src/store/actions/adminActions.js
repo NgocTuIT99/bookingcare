@@ -1,7 +1,8 @@
 import actionTypes from './actionTypes';
 import {
     getAllCodeService, createNewUserService, getTopDoctorHomeService,
-    getAllUserService, deleteUserService, editUserService
+    getAllUserService, deleteUserService, editUserService, getAllDoctorService,
+    saveInforDoctorService
 } from '../../services/userService';
 import { toast } from 'react-toastify';
 
@@ -220,4 +221,56 @@ export const fetchTopDoctorSuccess = (data) => ({
 
 export const fetchTopDoctorFailed = () => ({
     type: actionTypes.FETCH_TOP_DOCTOR_FAILED
+})
+
+export const fetchAllDoctor = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllDoctorService();
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllDoctorSuccess(res.data));
+            } else {
+                dispatch(fetchAllDoctorFailed());
+            }
+        } catch (e) {
+            dispatch(fetchAllDoctorFailed());
+            console.log(e);
+        }
+    }
+}
+
+export const fetchAllDoctorSuccess = (data) => ({
+    type: actionTypes.FETCH_ALL_DOCTOR_SUCCESS,
+    allDoctor: data
+})
+
+export const fetchAllDoctorFailed = () => ({
+    type: actionTypes.FETCH_ALL_DOCTOR_FAILED
+})
+
+export const saveInforDoctor = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await saveInforDoctorService(data);
+            if (res && res.errCode === 0) {
+                toast.success("Save infor doctor success!");
+                dispatch(saveInforDoctorSuccess());
+            } else {
+                toast.error("Save infor doctor failed!");
+                dispatch(saveInforDoctorFailed());
+            }
+        } catch (e) {
+            toast.error("Save infor doctor failed!");
+            dispatch(saveInforDoctorFailed());
+            console.log(e);
+        }
+    }
+}
+
+export const saveInforDoctorSuccess = () => ({
+    type: actionTypes.SAVE_INFOR_DOCTOR_SUCCESS,
+})
+
+export const saveInforDoctorFailed = () => ({
+    type: actionTypes.SAVE_INFOR_DOCTOR_FAILED
 })
