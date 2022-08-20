@@ -24,7 +24,7 @@ let iniWebRoutes = (app) => {
     router.get('/api/top-doctor-home', doctorController.getTopDoctorHome);
     router.get('/api/get-all-doctor', doctorController.getAllDoctor);
     router.post('/api/save-infor-doctor', doctorController.postInforDoctor);
-    router.post('/api/get-infor-doctor-by-id', doctorController.getInforDoctorById);
+    router.get('/api/get-infor-doctor-by-id', doctorController.getInforDoctorById);
 
     return app.use("/", router);
 }
