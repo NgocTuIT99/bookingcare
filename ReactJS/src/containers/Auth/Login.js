@@ -31,30 +31,36 @@ class Login extends Component {
         })
         try {
             let data = await handleLoginApi(this.state.username, this.state.password);
-            if(data && data.errCode !== 0){
+            if (data && data.errCode !== 0) {
                 this.setState({
                     errMessage: data.message
                 })
             }
-            if(data && data.errCode === 0){
+            if (data && data.errCode === 0) {
                 this.props.userLoginSuccess(data.user)
             }
-        } catch(e) {
-            if(e.response) {
-                if(e.response.data) {
+        } catch (e) {
+            if (e.response) {
+                if (e.response.data) {
                     this.setState({
                         errMessage: e.response.data.message
                     })
                 }
             }
         }
-        
+
     }
 
     handleShowHidePassword = () => {
         this.setState({
             isShowPassword: !this.state.isShowPassword
         })
+    }
+
+    handleKeyDown = (event) => {
+        if (event.key === 'Enter' || event.keyCode === 13) {
+            this.handleLogin();
+        }
     }
 
     render() {
@@ -78,14 +84,15 @@ class Login extends Component {
                                     type={this.state.isShowPassword ? 'text' : 'password'}
                                     className="form-control"
                                     placeholder='Enter your password'
-                                    onChange={(event) => this.handleOneChangePassword(event)} />
+                                    onChange={(event) => this.handleOneChangePassword(event)}
+                                    onKeyDown={(event) => this.handleKeyDown(event)} />
                                 <span onClick={() => this.handleShowHidePassword()} >
                                     <i className={this.state.isShowPassword ? 'far fa-eye-slash' : 'far fa-eye'}></i>
-                                    </span>
+                                </span>
                             </div>
                         </div>
                         <div className="col-12" style={{ color: 'red' }}>
-                            { this.state.errMessage }
+                            {this.state.errMessage}
                         </div>
                         <div className="col-12">
                             <button className="btn-login" onClick={() => { this.handleLogin() }}>Login</button>

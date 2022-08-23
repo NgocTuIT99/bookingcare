@@ -274,3 +274,28 @@ export const saveInforDoctorSuccess = () => ({
 export const saveInforDoctorFailed = () => ({
     type: actionTypes.SAVE_INFOR_DOCTOR_FAILED
 })
+
+export const fetchAllScheduleTime = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService("TIME");
+            if (res && res.errCode === 0) {
+                dispatch(fetchAllScheduleTimeSuccess(res.data));
+            } else {
+                dispatch(fetchAllScheduleTimeFailed());
+            }
+        } catch (e) {
+            dispatch(fetchAllScheduleTimeFailed());
+            console.log(e);
+        }
+    }
+}
+
+export const fetchAllScheduleTimeSuccess = (data) => ({
+    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_SUCCESS,
+    dataTime: data
+})
+
+export const fetchAllScheduleTimeFailed = () => ({
+    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILED
+})

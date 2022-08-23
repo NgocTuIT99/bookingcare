@@ -25,6 +25,8 @@ let iniWebRoutes = (app) => {
     router.get('/api/get-all-doctor', doctorController.getAllDoctor);
     router.post('/api/save-infor-doctor', doctorController.postInforDoctor);
     router.get('/api/get-infor-doctor-by-id', doctorController.getInforDoctorById);
+    router.post('/api/bulk-create-schedule', doctorController.bulkCreateSchedule);
+    router.get('/api/get-schedule-doctor-by-date', doctorController.getScheduleByDate);
 
     return app.use("/", router);
 }
