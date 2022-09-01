@@ -52,47 +52,6 @@ let getAllDoctor = () => {
     })
 }
 
-let postInforDoctor = (data) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            if (!data.doctorId || !data.contentHTML || !data.contentMarkdown || !data.action) {
-                resolve({
-                    errCode: 1,
-                    message: 'Missing parameter'
-                })
-            } else {
-                if (data.action === 'CREATE') {
-                    await db.Markdown.create({
-                        contentHTML: data.contentHTML,
-                        contentMarkdown: data.contentMarkdown,
-                        description: data.description,
-                        doctorId: data.doctorId,
-                    })
-                } else if (data.action === 'EDIT') {
-                    let doctorMarkdown = await db.Markdown.findOne({
-                        where: { doctorId: data.doctorId },
-                        raw: false
-                    })
-
-                    if (doctorMarkdown) {
-                        doctorMarkdown.contentHTML = data.contentHTML;
-                        doctorMarkdown.contentMarkdown = data.contentMarkdown;
-                        doctorMarkdown.description = data.description;
-                        doctorMarkdown.updatedAt = new Date();
-                        await doctorMarkdown.save();
-                    }
-                }
-                resolve({
-                    errCode: 0,
-                    message: 'Save infor doctor success'
-                })
-            }
-        } catch (e) {
-            reject(e)
-        }
-    })
-}
-
 let getInforDoctorById = (idInput) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -161,17 +120,10 @@ let bulkCreateSchedule = (data) => {
                         raw: true
                     }
                 );
-                // Convert date 
-                if (existing && existing.length > 0) {
-                    existing = existing.map(item => {
-                        item.date = new Date(item.date).getTime();
-                        return item;
-                    })
-                }
 
                 //compare diffirent
                 let toCreate = _.differenceWith(schedule, existing, (a, b) => {
-                    return a.timeType === b.timeType && a.date === b.date;
+                    return a.timeType === b.timeType && +a.date === +b.date;
                 })
 
                 // create data
@@ -204,6 +156,11 @@ let getScheduleByDate = (id, date) => {
                         doctorId: id,
                         date: date
                     },
+                    include: [
+                        { model: db.Allcode, as: 'timeTypeData', attributes: ['valueEn', 'valueVi'] },
+                    ],
+                    raw: false,
+                    nest: true
                 })
 
                 if (!dataSchedule) dataSchedule = [];
@@ -211,6 +168,83 @@ let getScheduleByDate = (id, date) => {
                 resolve({
                     errCode: 0,
                     data: dataSchedule
+                })
+            }
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
+let postInforDoctor = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!data.doctorId
+                || !data.contentHTML
+                || !data.contentMarkdown
+                || !data.action
+                || !data.selectedProvince
+                || !data.selectedPrice
+                || !data.selectedPayment
+                || !data.nameClinic
+                || !data.addressClinic
+                || !data.note) {
+                resolve({
+                    errCode: 1,
+                    message: 'Missing parameter'
+                })
+            } else {
+                if (data.action === 'CREATE') {
+                    await db.Markdown.create({
+                        contentHTML: data.contentHTML,
+                        contentMarkdown: data.contentMarkdown,
+                        description: data.description,
+                        doctorId: data.doctorId,
+                    })
+                } else if (data.action === 'EDIT') {
+                    let doctorMarkdown = await db.Markdown.findOne({
+                        where: { doctorId: data.doctorId },
+                        raw: false
+                    })
+
+                    if (doctorMarkdown) {
+                        doctorMarkdown.contentHTML = data.contentHTML;
+                        doctorMarkdown.contentMarkdown = data.contentMarkdown;
+                        doctorMarkdown.description = data.description;
+                        doctorMarkdown.updatedAt = new Date();
+                        await doctorMarkdown.save();
+                    }
+                }
+
+                let doctorInfor = await db.Doctor_Infor.findOne({
+                    where: {
+                        doctorId: data.doctorId,
+                    },
+                    raw: false
+                })
+                if (doctorInfor) {
+                    doctorInfor.doctorId = data.doctorId;
+                    doctorInfor.priceId = data.selectedPrice;
+                    doctorInfor.provinceId = data.selectedProvince;
+                    doctorInfor.paymentId = data.selectedPayment;
+                    doctorInfor.nameClinic = data.nameClinic;
+                    doctorInfor.addressClinic = data.addressClinic;
+                    doctorInfor.note = data.note;
+                    await doctorInfor.save();
+                } else {
+                    await db.Doctor_Infor.create({
+                        doctorId: data.doctorId,
+                        priceId: data.selectedPrice,
+                        provinceId: data.selectedProvince,
+                        paymentId: data.selectedPayment,
+                        nameClinic: data.nameClinic,
+                        addressClinic: data.addressClinic,
+                        note: data.note,
+                    })
+                }
+                resolve({
+                    errCode: 0,
+                    message: 'Save infor doctor succeed!'
                 })
             }
         } catch (e) {
