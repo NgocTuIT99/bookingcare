@@ -4,6 +4,27 @@ import _ from "lodash";
 
 const MAX_NUMBER_SCHEDULE = process.env.MAX_NUMBER_SCHEDULE;
 
+let checkRequiredFields = (inputData) => {
+    let arrFields = ['doctorId', 'contentHTML', 'contentMarkdown', 'action',
+        'selectedPrice', 'selectedPayment', 'selectedProvince', 'nameClinic', 'addressClinic',
+        'note', 'specialtyId']
+
+    let isValid = true;
+    let element = '';
+    for (let i = 0; i < arrFields.length; i++) {
+        if (!inputData[arrFields[i]]) {
+            isValid = false;
+            element = arrFields[i];
+            break;
+        }
+    }
+
+    return {
+        isValid: isValid,
+        element: element
+    }
+}
+
 let getTopDoctorHome = (limit) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -191,19 +212,11 @@ let getScheduleByDate = (id, date) => {
 let postInforDoctor = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!data.doctorId
-                || !data.contentHTML
-                || !data.contentMarkdown
-                || !data.action
-                || !data.selectedProvince
-                || !data.selectedPrice
-                || !data.selectedPayment
-                || !data.nameClinic
-                || !data.addressClinic
-                || !data.note) {
+            let checkObj = checkRequiredFields(data)
+            if (checkObj.isValid === false) {
                 resolve({
                     errCode: 1,
-                    message: 'Missing parameter'
+                    message: `Missing parameter: ${checkObj.element}`
                 })
             } else {
                 if (data.action === 'CREATE') {
@@ -242,6 +255,8 @@ let postInforDoctor = (data) => {
                     doctorInfor.nameClinic = data.nameClinic;
                     doctorInfor.addressClinic = data.addressClinic;
                     doctorInfor.note = data.note;
+                    doctorInfor.specialtyId = data.specialtyId;
+                    doctorInfor.clinicId = data.clinicId;
                     await doctorInfor.save();
                 } else {
                     await db.Doctor_Infor.create({
@@ -252,6 +267,8 @@ let postInforDoctor = (data) => {
                         nameClinic: data.nameClinic,
                         addressClinic: data.addressClinic,
                         note: data.note,
+                        specialtyId: data.specialtyId,
+                        clinicId: data.clinicId,
                     })
                 }
                 resolve({

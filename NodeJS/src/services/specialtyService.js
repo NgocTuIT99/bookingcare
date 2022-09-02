@@ -18,7 +18,7 @@ let createNewSpecialty = (data) => {
                     name: data.name,
                     image: data.imageBase64,
                     descriptionMarkdown: data.descriptionMarkdown,
-                    descriptiontHTML: data.descriptionHTML
+                    descriptionHTML: data.descriptionHTML
                 })
 
                 resolve({
@@ -55,7 +55,49 @@ let getAllSpecialty = (data) => {
     })
 }
 
+let getDetailSpecialtyById = (id, location) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = await db.Specialty.findOne({
+                where: {
+                    id: id,
+                },
+                attributes: ['descriptionHTML', 'descriptionMarkdown'],
+            });
+
+            if (data) {
+                let doctorSpecialty = [];
+                if (location === 'ALL') {
+                    doctorSpecialty = await db.Doctor_Infor.findAll({
+                        where: { specialtyId: id },
+                        attributes: ['doctorId', 'provinceId']
+                    })
+                } else {
+                    doctorSpecialty = await db.Doctor_Infor.findAll({
+                        where: {
+                            specialtyId: id,
+                            provinceId: location
+                        },
+                        attributes: ['doctorId', 'provinceId']
+                    })
+                }
+
+                data.doctorSpecialty = doctorSpecialty;
+            } else data = {}
+
+            resolve({
+                errCode: 0,
+                message: 'Ok!',
+                data
+            })
+        } catch (e) {
+            reject(e)
+        }
+    })
+}
+
 module.exports = {
     createNewSpecialty: createNewSpecialty,
-    getAllSpecialty: getAllSpecialty
+    getAllSpecialty: getAllSpecialty,
+    getDetailSpecialtyById: getDetailSpecialtyById,
 }
