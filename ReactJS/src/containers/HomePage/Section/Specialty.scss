@@ -38,6 +38,7 @@
         .section-body {
 
             .section-customize {
+                cursor: pointer;
 
                 .bg-image {
                     //background: url('../../../assets/Specialty/co-xuong-khop.jpg');
@@ -47,6 +48,14 @@
                     background-color: #eee;
                     height: 150px;
                     width: 278px;
+                }
+
+                .specialty-name {
+                    padding: 10px 0;
+
+                    &:hover {
+                        color: #45c3d2;
+                    }
                 }
             }
 

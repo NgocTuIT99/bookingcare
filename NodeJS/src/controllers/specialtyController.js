@@ -1,8 +1,8 @@
-import patientService from "../services/patientService";
+import specialtyService from "../services/specialtyService";
 
-let postBookAppointment = async (req, res) => {
+let createNewSpecialty = async (req, res) => {
     try {
-        let doctor = await patientService.postBookAppointment(req.body);
+        let doctor = await specialtyService.createNewSpecialty(req.body);
         return res.status(200).json(doctor);
     } catch (e) {
         console.log(e);
@@ -13,9 +13,9 @@ let postBookAppointment = async (req, res) => {
     }
 }
 
-let postVerifyBookAppointment = async (req, res) => {
+let getAllSpecialty = async (req, res) => {
     try {
-        let doctor = await patientService.postVerifyBookAppointment(req.body);
+        let doctor = await specialtyService.getAllSpecialty();
         return res.status(200).json(doctor);
     } catch (e) {
         console.log(e);
@@ -27,6 +27,6 @@ let postVerifyBookAppointment = async (req, res) => {
 }
 
 module.exports = {
-    postBookAppointment: postBookAppointment,
-    postVerifyBookAppointment: postVerifyBookAppointment,
+    createNewSpecialty: createNewSpecialty,
+    getAllSpecialty: getAllSpecialty,
 }
