@@ -113,7 +113,7 @@ let getInforDoctorById = (idInput) => {
                 })
 
                 if (users && users.image) {
-                    users.image = new Buffer(users.image, 'base64').toString('binary');
+                    users.image = Buffer.from(users.image, 'base64').toString('binary');
                 }
 
                 if (!users) users = {};
@@ -360,7 +360,7 @@ let getProfileDoctorById = (idInput) => {
                 })
 
                 if (users && users.image) {
-                    users.image = new Buffer(users.image, 'base64').toString('binary');
+                    users.image = Buffer.from(users.image, 'base64').toString('binary');
                 }
 
                 if (!users) users = {};
