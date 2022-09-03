@@ -73,20 +73,20 @@ class ManageClinic extends Component {
 
         return (
             <div className="manage-specialty-container">
-                <div className="ms-title">Quan ly phong khama</div>
+                <div className="ms-title">Quản lý phòng khám</div>
                 <div className="add-new-specialty row">
                     <div className="col-6 form-group">
-                        <label>Ten phong kham</label>
+                        <label>Tên phòng khám</label>
                         <input type="text" className="form-control" value={this.state.name}
                             onChange={(event) => this.handleOnChangeInput(event, 'name')} />
                     </div>
                     <div className="col-6 form-group">
-                        <label>Anh phong kham</label>
+                        <label>Ảnh phòng khám</label>
                         <input type="file" className="form-control-file"
                             onChange={(event) => this.handleOnChangeImage(event)} />
                     </div>
                     <div className="col-6 form-group">
-                        <label>Dia chi phong kham</label>
+                        <label>Địa chỉ phòng khám</label>
                         <input type="text" className="form-control"
                             onChange={(event) => this.handleOnChangeInput(event, 'address')} />
                     </div>
