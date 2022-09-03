@@ -38,6 +38,15 @@
         .section-body {
 
             .section-customize {
+                cursor: pointer;
+
+                .clinic-name {
+                    padding: 10px 0;
+
+                    &:hover {
+                        color: #45c3d2;
+                    }
+                }
 
                 .bg-image {
                     //background: url('../../../assets/Specialty/cham-cuu.jpg');
